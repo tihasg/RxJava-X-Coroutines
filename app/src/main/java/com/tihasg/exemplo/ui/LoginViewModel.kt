@@ -2,22 +2,31 @@ package com.tihasg.exemplo.ui
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.tihasg.exemplo.base.BaseViewModel
 import com.tihasg.exemplo.repository.Repository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import java.lang.Exception
+import kotlin.coroutines.CoroutineContext
 
 class LoginViewModel(
     private val repository: Repository,
-) : BaseViewModel() {
+) : ViewModel() , CoroutineScope {
 
     private val _state = MutableLiveData<ScreenState>()
     val state: LiveData<ScreenState>
         get() = _state
 
+    private val job = Job()
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.IO + job
 
     fun searchByFlagAndBranchOne(filial: Int) {
         try {
-            coroutineScope {
+            launch  {
                 val response = repository.searchByFlagAndBranch(
                     bandeira = 1,
                     filial = filial
@@ -48,7 +57,7 @@ class LoginViewModel(
     }
 
     private fun searchByFlagAndBranchTwo(filial: Int) {
-        coroutineScope {
+        launch  {
             val response = repository.searchByFlagAndBranch(
                 bandeira = 2,
                 filial = filial
@@ -74,9 +83,7 @@ class LoginViewModel(
     }
 
     sealed class ScreenState {
-
         data class OnGetFlagSucess(val branchCode: String) : ScreenState()
         data class OnGetFlagError(val message: String) : ScreenState()
-
     }
 }
