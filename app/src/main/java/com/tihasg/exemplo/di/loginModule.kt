@@ -1,7 +1,7 @@
 package com.tihasg.exemplo.di
 
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
-import com.tihasg.exemplo.network.LoginApiVia
+import com.tihasg.exemplo.network.NewsApi
 import com.tihasg.exemplo.repository.Repository
 import com.tihasg.exemplo.ui.LoginViewModel
 import okhttp3.OkHttpClient
@@ -35,13 +35,13 @@ private fun provideOkHttp(httpLoggingInterceptor: HttpLoggingInterceptor): OkHtt
     return okHttpClient.build()
 }
 
-private fun provideRetrofit(okHttpClient: OkHttpClient): LoginApiVia {
+private fun provideRetrofit(okHttpClient: OkHttpClient): NewsApi {
     val retrofit = Retrofit.Builder()
-        .baseUrl("http://api.viamais-qa.ocp-eqx.dc.nova/")
+        .baseUrl("https://api.spaceflightnewsapi.net/v3/")
         .addConverterFactory(GsonConverterFactory.create())
         .addCallAdapterFactory(CoroutineCallAdapterFactory())
         .client(okHttpClient)
         .build()
 
-    return retrofit.create(LoginApiVia::class.java)
+    return retrofit.create(NewsApi::class.java)
 }

@@ -20,66 +20,25 @@ class LoginViewModel(
     val state: LiveData<ScreenState>
         get() = _state
 
+    private val _count = MutableLiveData<Int>()
+    val count: LiveData<Int>
+    get() = _count
+
     private val job = Job()
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.IO + job
 
-    fun searchByFlagAndBranchOne(filial: Int) {
-        try {
-            launch  {
-                val response = repository.searchByFlagAndBranch(
-                    bandeira = 1,
-                    filial = filial
-                )
-
-                if (response.code() == 204) {
-                    _state.postValue(ScreenState.OnGetFlagError("FILIAL NÃO ENCONTRADA"))
-                }
-
-                if (response.isSuccessful) {
-                    response.body()?.let { branchGetResponse ->
-                        _state.postValue(
-                            ScreenState.OnGetFlagSucess(
-                                branchGetResponse.codigo.toString()
-                            )
-                        )
-                    }
-
-
-                } else {
-                    searchByFlagAndBranchTwo(filial = filial)
-                }
-            }
-        }catch (e: Exception){
-            print(e.message)
-        }
-
-    }
-
-    private fun searchByFlagAndBranchTwo(filial: Int) {
-        launch  {
-            val response = repository.searchByFlagAndBranch(
-                bandeira = 2,
-                filial = filial
-            )
-
-            if (response.code() == 204) {
-                _state.postValue(ScreenState.OnGetFlagError("FILIAL NÃO ENCONTRADA"))
-            }
-
-            if (response.isSuccessful) {
-                response.body()?.let { branchGetResponse ->
-                    _state.postValue(
-                        ScreenState.OnGetFlagSucess(
-                            branchGetResponse.codigo.toString()
-                        )
-                    )
-                }
-            } else {
-                val message = response.errorBody().toString()
-                _state.postValue(ScreenState.OnGetFlagError(message))
-            }
-        }
+    fun getCount(){
+        //aqui onde eu inicio o coroutines
+       launch {
+           // aqui onde chamo repositorio pra fazer a chamada
+           val response=repository.getCount()
+           // aqui eu coloco uma verificação para uma verificação se a api deu sucesso
+           if (response.isSuccessful){
+               // aqui atualizo meu livedata passando o valor da api
+             _count.postValue(response.body())
+           }
+       }//aqui onde fecho o coroutines
     }
 
     sealed class ScreenState {
