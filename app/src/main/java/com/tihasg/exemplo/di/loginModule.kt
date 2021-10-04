@@ -3,7 +3,7 @@ package com.tihasg.exemplo.di
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.tihasg.exemplo.network.NewsApi
 import com.tihasg.exemplo.repository.Repository
-import com.tihasg.exemplo.ui.LoginViewModel
+import com.tihasg.exemplo.ui.HomeViewModel
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -18,7 +18,7 @@ val loginModule = module {
 
     factory { Repository(get()) }
 
-    viewModel { LoginViewModel(get()) }
+    viewModel { HomeViewModel(get()) }
 }
 
 private fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor =
