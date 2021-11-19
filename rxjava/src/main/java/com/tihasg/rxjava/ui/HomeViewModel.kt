@@ -4,35 +4,28 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.tihasg.rxjava.repository.Repository
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
-import kotlin.coroutines.CoroutineContext
+import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 
 class HomeViewModel(
     private val repository: Repository,
-) : ViewModel(), CoroutineScope {
+) : ViewModel() {
 
     private val _count = MutableLiveData<Int>()
     val count: LiveData<Int>
         get() = _count
 
-    private val job = Job()
-    override val coroutineContext: CoroutineContext
-        get() = Dispatchers.IO + job
-
-    fun getCount() {
-        //aqui onde eu inicio o coroutines
-        launch {
-            // aqui onde chamo repositorio pra fazer a chamada
-            val response = repository.getCount()
-            // aqui eu coloco uma verificação para uma verificação se a api deu sucesso
-            if (response.isSuccessful) {
-                // aqui atualizo meu livedata passando o valor da api
-                _count.postValue(response.body())
+    fun getCount(): Single<Int> {
+        return repository
+            .getCount()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe {  }
+            .doFinally {  }
+            .map { response ->
+                _count.postValue(response)
+                response
             }
-        }//aqui onde fecho o coroutines
     }
-
 }

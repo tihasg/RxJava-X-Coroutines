@@ -1,9 +1,9 @@
 package com.tihasg.rxjava.network
 
-import retrofit2.Response
+import io.reactivex.Single
 import retrofit2.http.GET
 
 interface NewsApi {
     @GET("articles/count")
-    suspend fun getcount(): Response<Int>
+    fun getcount(): Single<Int>
 }

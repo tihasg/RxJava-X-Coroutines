@@ -9,6 +9,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
 val loginModule = module {
@@ -38,8 +39,7 @@ private fun provideOkHttp(httpLoggingInterceptor: HttpLoggingInterceptor): OkHtt
 private fun provideRetrofit(okHttpClient: OkHttpClient): NewsApi {
     val retrofit = Retrofit.Builder()
         .baseUrl("https://api.spaceflightnewsapi.net/v3/")
-        .addConverterFactory(GsonConverterFactory.create())
-        .addCallAdapterFactory(CoroutineCallAdapterFactory())
+        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .client(okHttpClient)
         .build()
 
