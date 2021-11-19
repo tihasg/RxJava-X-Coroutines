@@ -7,6 +7,6 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "Exemplo"
-include ':app'
-include ':navigation'
-include ':pop-up'
+include ':coroutines'
+include ':dialog'
+include ':rxjava'
