@@ -23,14 +23,14 @@ class HomeActivity : AppCompatActivity() {
         image = findViewById(R.id.imageView)
 
         viewModel.getCount()
+        viewModel.getInfo()
+
         bindStates()
     }
 
 
     private fun bindStates() {
         viewModel.count.observeForever {
-            textView?.text = it.toString()
-
             ViaPopUp.Builder(this)
                 .setGravity(Gravity.CENTER)
                 .setMessage(it.toString())
@@ -40,6 +40,10 @@ class HomeActivity : AppCompatActivity() {
                     }
                 })
                 .show()
+        }
+
+        viewModel.info.observeForever {
+            textView?.text = "version:${it.version}"
         }
     }
 

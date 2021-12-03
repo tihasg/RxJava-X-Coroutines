@@ -6,8 +6,10 @@ import rx.Observable
 class Repository(private val api: NewsApi) {
 
     fun getCount(): Observable<Int> {
-        return api
-            .getCount()
+        return api.getCount()
     }
 
+    fun getInfo(): Observable<InfoResponse> {
+        return api.getInfo()
+    }
 }

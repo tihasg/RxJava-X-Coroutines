@@ -5,5 +5,8 @@ import retrofit2.http.GET
 
 interface NewsApi {
     @GET("articles/count")
-    suspend fun getcount(): Response<Int>
+    suspend fun getCount(): Response<Int>
+
+    @GET("info")
+    suspend fun getInfo(): Response<InfoResponse>
 }

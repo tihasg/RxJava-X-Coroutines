@@ -33,12 +33,20 @@ class HomeActivity : AppCompatActivity() {
             }, {
                 setError(it.message.toString())
             })
+
+
+        viewModel.loadInfo()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                textView?.text = "version:${it.version}"
+            }, {
+                setError(it.message.toString())
+            })
     }
 
 
     private fun setCount(value: Int) {
-        textView?.text = value.toString()
-
         ViaPopUp.Builder(this)
             .setGravity(Gravity.CENTER)
             .setMessage(value.toString())

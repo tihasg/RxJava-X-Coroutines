@@ -61,4 +61,5 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
     // Interceptor para visualizar os logs das requisições do Retrofit
     implementation 'com.squareup.okhttp3:logging-interceptor:3.6.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.2'
 }
