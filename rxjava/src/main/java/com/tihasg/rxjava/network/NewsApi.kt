@@ -1,7 +1,6 @@
 package com.tihasg.rxjava.network
-
-import io.reactivex.Single
 import retrofit2.http.GET
+import rx.Single
 
 interface NewsApi {
     @GET("articles/count")

@@ -8,8 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.tihasg.pop_up.OnDialogClickListener
 import com.tihasg.pop_up.ViaPopUp
 import com.tihasg.rxjava.R
-import io.reactivex.Observable
-import io.reactivex.Single
+
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class HomeActivity : AppCompatActivity() {
@@ -25,17 +24,8 @@ class HomeActivity : AppCompatActivity() {
         //vinculando com layout
         textView = findViewById(R.id.textId)
         image = findViewById(R.id.imageView)
-        viewModel.getCount()
+        viewModel.loadCount()
         bindStates()
-        intentions()
-
-    }
-
-    private fun intentions(): Observable<Single<Int>>? {
-        val initialIntention = Observable
-            .just(viewModel.getCount())
-
-        return Observable.mergeArray(initialIntention)
     }
 
 

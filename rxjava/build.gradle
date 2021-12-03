@@ -34,22 +34,6 @@ android {
 dependencies {
     implementation project(':dialog')
 
-    // Kotlin + COROUTINES
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.40")
-
-    //RX
-    implementation 'io.reactivex.rxjava2:rxkotlin:2.2.0'
-    implementation "io.reactivex.rxjava2:rxjava:2.2.5"
-    implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
-
-    //AndroidX
-    implementation("androidx.appcompat:appcompat:1.0.2")
-    implementation("androidx.constraintlayout:constraintlayout:1.1.3")
-    implementation("androidx.core:core-ktx:1.0.2")
-
-    // AndroidX LiveData and ViewModel
-    implementation("androidx.lifecycle:lifecycle-extensions:2.0.0")
-
     // DI
     implementation "org.koin:koin-android:$rootProject.ext.version_koin"
     implementation "org.koin:koin-androidx-scope:$rootProject.ext.version_koin"
@@ -57,12 +41,24 @@ dependencies {
     implementation "org.koin:koin-androidx-ext:$rootProject.ext.version_koin"
     implementation "org.koin:koin-android-viewmodel:$rootProject.ext.version_koin"
 
+    // Dependência da linguagem Kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    // AppCompat
+    implementation "com.android.support:appcompat-v7:$appcompat_version"
+    
+    // RXJava
+    implementation 'io.reactivex:rxjava:1.2.5'
+    implementation 'io.reactivex.rxjava3:rxjava:3.0.0'
+    implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
+
+    // RXAndroid para termos acesso a main thread do Android
+    implementation'io.reactivex:rxandroid:1.2.1'
     // Retrofit
-    implementation("com.squareup.retrofit2:retrofit:2.4.0")
-    implementation("com.squareup.retrofit2:converter-moshi:2.4.0")
-    implementation("com.squareup.moshi:moshi-kotlin:1.8.0")
-    implementation("com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2")
-    implementation("com.squareup.okhttp3:logging-interceptor:3.11.0")
-    implementation "com.squareup.retrofit2:converter-gson:$rootProject.ext.retrofitVersion"
-    implementation "com.squareup.retrofit2:adapter-rxjava2:$rootProject.ext.retrofit"
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    // Adapter do Retrofit para retornar objetos observáveis
+    implementation "com.squareup.retrofit2:adapter-rxjava:$retrofit_version"
+    // Converter do Retrofit para utilizar o Gson para tratar a resposta do servidor
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    // Interceptor para visualizar os logs das requisições do Retrofit
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.6.0'
 }

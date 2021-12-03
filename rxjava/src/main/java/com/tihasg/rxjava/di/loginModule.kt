@@ -1,6 +1,5 @@
 package com.tihasg.rxjava.di
 
-import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.tihasg.rxjava.network.NewsApi
 import com.tihasg.rxjava.repository.Repository
 import com.tihasg.rxjava.ui.HomeViewModel
@@ -9,8 +8,8 @@ import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory
+
 
 val loginModule = module {
     single { provideHttpLoggingInterceptor() }
@@ -39,7 +38,7 @@ private fun provideOkHttp(httpLoggingInterceptor: HttpLoggingInterceptor): OkHtt
 private fun provideRetrofit(okHttpClient: OkHttpClient): NewsApi {
     val retrofit = Retrofit.Builder()
         .baseUrl("https://api.spaceflightnewsapi.net/v3/")
-        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+        .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
         .client(okHttpClient)
         .build()
 

@@ -4,9 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.tihasg.rxjava.repository.Repository
-import io.reactivex.Single
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import rx.Observable
 
 class HomeViewModel(
     private val repository: Repository,
@@ -16,16 +14,14 @@ class HomeViewModel(
     val count: LiveData<Int>
         get() = _count
 
-    fun getCount(): Single<Int> {
+    fun loadCount(): Observable<Int> {
         return repository
             .getCount()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .doOnSubscribe {  }
-            .doFinally {  }
-            .map { response ->
-                _count.postValue(response)
-                response
+            .toObservable()
+            .flatMap {
+                _count.postValue(it)
+                Observable.just(it)
             }
     }
+
 }
