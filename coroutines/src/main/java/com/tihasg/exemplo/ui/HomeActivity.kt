@@ -12,26 +12,23 @@ import org.koin.android.viewmodel.ext.android.viewModel
 
 class HomeActivity : AppCompatActivity() {
     private val viewModel: HomeViewModel by viewModel()
-
-    //referenciando componente do android
     private var textView: TextView? = null
     private var image: ImageView? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        //vinculando com layout
         textView = findViewById(R.id.textId)
         image = findViewById(R.id.imageView)
+
         viewModel.getCount()
         bindStates()
     }
 
 
     private fun bindStates() {
-        //escutando livedate que tá na view model
         viewModel.count.observeForever {
-            //fazendo uma ação com o valor que esta retornando, a ação é setar o texto
             textView?.text = it.toString()
 
             ViaPopUp.Builder(this)

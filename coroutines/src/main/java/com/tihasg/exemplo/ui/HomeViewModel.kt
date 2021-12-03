@@ -23,16 +23,12 @@ class HomeViewModel(
         get() = Dispatchers.IO + job
 
     fun getCount() {
-        //aqui onde eu inicio o coroutines
         launch {
-            // aqui onde chamo repositorio pra fazer a chamada
             val response = repository.getCount()
-            // aqui eu coloco uma verificação para uma verificação se a api deu sucesso
             if (response.isSuccessful) {
-                // aqui atualizo meu livedata passando o valor da api
                 _count.postValue(response.body())
             }
-        }//aqui onde fecho o coroutines
+        }
     }
 
 }
