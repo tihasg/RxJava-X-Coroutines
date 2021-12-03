@@ -1,5 +1,6 @@
 package com.tihasg.rxjava.di
 
+import com.google.gson.GsonBuilder
 import com.tihasg.rxjava.network.NewsApi
 import com.tihasg.rxjava.repository.Repository
 import com.tihasg.rxjava.ui.HomeViewModel
@@ -9,6 +10,7 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory
+import retrofit2.converter.gson.GsonConverterFactory
 
 
 val loginModule = module {
@@ -36,9 +38,12 @@ private fun provideOkHttp(httpLoggingInterceptor: HttpLoggingInterceptor): OkHtt
 }
 
 private fun provideRetrofit(okHttpClient: OkHttpClient): NewsApi {
+    val gson = GsonBuilder().setLenient().create()
+
     val retrofit = Retrofit.Builder()
         .baseUrl("https://api.spaceflightnewsapi.net/v3/")
         .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+        .addConverterFactory(GsonConverterFactory.create(gson))
         .client(okHttpClient)
         .build()
 

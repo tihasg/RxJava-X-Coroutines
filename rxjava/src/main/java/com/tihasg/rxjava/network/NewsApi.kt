@@ -1,8 +1,9 @@
 package com.tihasg.rxjava.network
+
 import retrofit2.http.GET
-import rx.Single
+import rx.Observable
 
 interface NewsApi {
     @GET("articles/count")
-    fun getcount(): Single<Int>
+    fun getCount(): Observable<Int>
 }
