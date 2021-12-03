@@ -8,7 +8,6 @@ interface NewsApi {
     @GET("articles/count")
     fun getCount(): Observable<Int>
 
-
     @GET("info")
     fun getInfo(): Observable<InfoResponse>
 }
