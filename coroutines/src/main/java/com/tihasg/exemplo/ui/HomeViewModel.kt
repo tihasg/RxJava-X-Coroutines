@@ -25,7 +25,17 @@ class HomeViewModel(
 
     private val job = Job()
     override val coroutineContext: CoroutineContext
-        get() = Dispatchers.IO + job
+        get() = Dispatchers.Main + job
+
+    /*Dispatchers.Main: use este agente para executar uma corrotina na linha de execução principal do Android. Ele só deve ser usado para interagir com a IU e realizar um trabalho rápido.
+    Exemplos incluem chamar funções suspend, executar operações de framework de IU do Android e atualizar objetos LiveData.*/
+
+    /*Dispatchers.IO: este agente é otimizado para executar E/S de disco ou rede fora da linha de execução principal. Exemplos incluem uso do componente Room,
+    leitura ou gravação de arquivos e execução de qualquer operação de rede.*/
+
+    /*Dispatchers.Default: este agente é otimizado para realizar trabalho intensivo da CPU fora da linha de execução principal.
+     Exemplos de casos de uso incluem classificação de uma lista e análise de JSON.
+    */
 
     fun getCount() {
         launch {
@@ -36,7 +46,7 @@ class HomeViewModel(
         }
     }
 
-    fun getInfo(){
+    fun getInfo() {
         launch {
             val response = repository.getInfo()
             if (response.isSuccessful) {
