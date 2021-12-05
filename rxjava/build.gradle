@@ -32,8 +32,6 @@ android {
 }
 
 dependencies {
-    implementation project(':dialog')
-
     // DI
     implementation "org.koin:koin-android:$rootProject.ext.version_koin"
     implementation "org.koin:koin-androidx-scope:$rootProject.ext.version_koin"

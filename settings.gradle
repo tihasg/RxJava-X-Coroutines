@@ -8,5 +8,4 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Exemplo"
 include ':coroutines'
-include ':dialog'
 include ':rxjava'

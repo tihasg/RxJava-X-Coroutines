@@ -1,13 +1,11 @@
 package com.tihasg.exemplo.ui
 
 import android.os.Bundle
-import android.view.Gravity
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.tihasg.exemplo.R
-import com.tihasg.pop_up.OnDialogClickListener
-import com.tihasg.pop_up.ViaPopUp
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class HomeActivity : AppCompatActivity() {
@@ -25,26 +23,25 @@ class HomeActivity : AppCompatActivity() {
         viewModel.getCount()
         viewModel.getInfo()
 
-        bindStates()
-    }
-
-
-    private fun bindStates() {
         viewModel.count.observeForever {
-            ViaPopUp.Builder(this)
-                .setGravity(Gravity.CENTER)
-                .setMessage(it.toString())
-                .setOnClickListener(object : OnDialogClickListener {
-                    override fun onClick(popUp: ViaPopUp.Builder) {
-                        popUp.dismiss()
-                    }
-                })
-                .show()
+            setCount(it)
         }
 
         viewModel.info.observeForever {
             textView?.text = "version:${it.version}"
         }
+
+        viewModel.error.observeForever {
+            setError(it)
+        }
+    }
+
+    private fun setCount(value: Int) {
+        Toast.makeText(this, value.toString(), Toast.LENGTH_LONG).show()
+    }
+
+    private fun setError(value: String) {
+        Toast.makeText(this, value, Toast.LENGTH_LONG).show()
     }
 
 }

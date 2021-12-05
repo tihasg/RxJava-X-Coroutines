@@ -37,8 +37,6 @@ android {
 
 
 dependencies {
-    implementation project(':dialog')
-
     // Kotlin + COROUTINES
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.40")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.2.2")

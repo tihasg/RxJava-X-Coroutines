@@ -19,6 +19,10 @@ class HomeViewModel(
     val count: LiveData<Int>
         get() = _count
 
+    private val _error = MutableLiveData<String>()
+    val error: LiveData<String>
+        get() = _error
+
     private val _info = MutableLiveData<InfoResponse>()
     val info: LiveData<InfoResponse>
         get() = _info
@@ -42,7 +46,10 @@ class HomeViewModel(
             val response = repository.getCount()
             if (response.isSuccessful) {
                 _count.postValue(response.body())
+            } else {
+                _error.postValue(response.errorBody().toString())
             }
+
         }
     }
 
@@ -51,6 +58,8 @@ class HomeViewModel(
             val response = repository.getInfo()
             if (response.isSuccessful) {
                 _info.postValue(response.body())
+            } else {
+                _error.postValue(response.errorBody().toString())
             }
         }
 

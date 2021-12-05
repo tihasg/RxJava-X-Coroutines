@@ -1,12 +1,10 @@
 package com.tihasg.rxjava.ui
 
 import android.os.Bundle
-import android.view.Gravity
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.tihasg.pop_up.OnDialogClickListener
-import com.tihasg.pop_up.ViaPopUp
 import com.tihasg.rxjava.R
 
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -47,27 +45,11 @@ class HomeActivity : AppCompatActivity() {
 
 
     private fun setCount(value: Int) {
-        ViaPopUp.Builder(this)
-            .setGravity(Gravity.CENTER)
-            .setMessage(value.toString())
-            .setOnClickListener(object : OnDialogClickListener {
-                override fun onClick(popUp: ViaPopUp.Builder) {
-                    popUp.dismiss()
-                }
-            })
-            .show()
+       Toast.makeText(this, value.toString(), Toast.LENGTH_LONG).show()
     }
 
     private fun setError(value: String) {
-        ViaPopUp.Builder(this)
-            .setGravity(Gravity.CENTER)
-            .setMessage(value)
-            .setOnClickListener(object : OnDialogClickListener {
-                override fun onClick(popUp: ViaPopUp.Builder) {
-                    popUp.dismiss()
-                }
-            })
-            .show()
+        Toast.makeText(this, value, Toast.LENGTH_LONG).show()
     }
 
 }
